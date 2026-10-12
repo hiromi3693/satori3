@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="ja" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蓮華・魂のさとり診断 & デイリーソウルエクササイズ</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Noto+Serif+JP:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            850: '#064e3b',
+                            950: '#022c22'
+                        },
+                        lotus: {
+                            100: '#fce7f3',
+                            300: '#f472b6',
+                            400: '#f43f5e',
+                            500: '#ec4899',
+                            600: '#db2777'
+                        },
+                        sage: {
+                            300: '#a7f3d0',
+                            400: '#6ee7b7',
+                            500: '#34d399',
+                            800: '#065f46',
+                            900: '#044e39',
+                            950: '#012e21'
+                        },
+                        gold: {
+                            300: '#fde047',
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Noto Serif JP', 'serif'],
+                        cinzel: ['Cinzel', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #021a14;
+            color: #f1f5f9;
+            font-family: 'Plus Jakarta Sans', 'Noto Serif JP', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .bg-lotus-gradient {
+            background: radial-gradient(circle at 50% 20%, rgba(16, 185, 129, 0.25) 0%, rgba(2, 44, 34, 0.95) 60%),
+                        radial-gradient(circle at 80% 80%, rgba(4, 120, 87, 0.3) 0%, rgba(2, 26, 20, 1) 100%);
+        }
+
+        .glass-card {
+            background: rgba(6, 78, 59, 0.15);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(52, 211, 153, 0.2);
+        }
+
+        .gold-glow {
+            text-shadow: 0 0 12px rgba(250, 204, 21, 0.5);
+        }
+
+        .lotus-glow {
+            text-shadow: 0 0 15px rgba(244, 114, 182, 0.6);
+        }
+
+        /* Cute Stamp Animation */
+        @keyframes stamp-in {
+            0% { transform: scale(3) rotate(-25deg); opacity: 0; }
+            50% { transform: scale(0.9) rotate(5deg); opacity: 1; }
+            70% { transform: scale(1.05) rotate(-3deg); }
+            100% { transform: scale(1) rotate(-5deg); opacity: 1; }
+        }
+
+        .animate-stamp {
+            animation: stamp-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* Triangle path for balloon knot */
+        .clip-path-triangle {
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        /* Float animation for fairy/lotus motif */
+        @keyframes float-gentle {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(2deg); }
+        }
+
+        .animate-float {
+            animation: float-gentle 4s ease-in-out infinite;
+        }
+
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #022c22;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #047857;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #10b981;
+        }
+    </style>
+</head>
+<body class="bg-lotus-gradient min-h-screen text-slate-100 flex flex-col relative selection:bg-emerald-500 selection:text-white">
+    <canvas id="lotusPondCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-70"></canvas>
+
+    <div class="relative z-10 flex flex-col min-h-screen">
+        <!-- HEADER / NAVIGATION -->
+        <header class="border-b border-emerald-900/50 backdrop-blur-md sticky top-0 z-50 bg-emerald-950/80">
+            <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('diagnosis')">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-600 via-teal-400 to-pink-400 p-0.5 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                        <div class="w-full h-full bg-emerald-950 rounded-full flex items-center justify-center text-pink-300 text-lg">
+                            🪷
+                        </div>
+                    </div>
+                    <div>
+                        <h1 class="font-cinzel text-lg md:text-xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-emerald-200 via-pink-300 to-amber-200">
+                            LOTUS AWAKENING
+                        </h1>
+                        <p class="text-[10px] text-emerald-300/80 tracking-widest uppercase">蓮華・さとり診断 & ソウルプラクティス</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <nav class="flex items-center space-x-1 sm:space-x-2 bg-emerald-950/90 p-1.5 rounded-full border border-emerald-800/40 text-xs md:text-sm">
+                    <button id="nav-diagnosis" onclick="switchTab('diagnosis')" class="px-3 py-1.5 rounded-full transition duration-300 font-medium flex items-center gap-1.5 bg-emerald-700 text-white shadow-md shadow-emerald-900/40">
+                        <i class="fa-solid fa-wand-magic-sparkles text-xs text-pink-300"></i>
+                        <span>さとり診断</span>
+                    </button>
+                    <button id="nav-daily" onclick="switchTab('daily')" class="px-3 py-1.5 rounded-full transition duration-300 font-medium flex items-center gap-1.5 text-slate-300 hover:text-white hover:bg-emerald-900/50">
+                        <i class="fa-solid fa-sun text-xs text-amber-400"></i>
+                        <span>デイリー習慣</span>
+                    </button>
+                    <button id="nav-breath" onclick="switchTab('breath')" class="px-3 py-1.5 rounded-full transition duration-300 font-medium flex items-center gap-1.5 text-slate-300 hover:text-white hover:bg-emerald-900/50">
+                        <i class="fa-solid fa-spa text-xs text-emerald-300"></i>
+                        <span>呼吸瞑想・音叉</span>
+                    </button>
+                    <button id="nav-stats" onclick="switchTab('stats')" class="px-3 py-1.5 rounded-full transition duration-300 font-medium flex items-center gap-1.5 text-slate-300 hover:text-white hover:bg-emerald-900/50">
+                        <i class="fa-solid fa-chart-line text-xs text-teal-300"></i>
+                        <span>記録</span>
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-grow max-w-4xl w-full mx-auto px-4 py-8 relative">
+
+            <!-- SECTION 1: DIAGNOSIS (覚醒度診断) -->
+            <section id="sec-diagnosis" class="tab-content transition-opacity duration-300">
+                
+                <!-- Welcome Screen -->
+                <div id="diag-welcome" class="glass-card rounded-3xl p-6 md:p-10 text-center relative overflow-hidden border border-emerald-500/30 shadow-2xl">
+                    <div class="absolute -top-24 -left-24 w-60 h-60 bg-emerald-600/20 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -bottom-24 -right-24 w-60 h-60 bg-pink-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-900/50 border border-emerald-500/40 text-emerald-200 text-xs font-semibold uppercase tracking-widest mb-4">
+                        <span>🪷</span> Lotus Awakening Assessment
+                    </div>
+
+                    <h2 class="text-2xl md:text-4xl font-serif font-bold text-white mb-4 leading-tight">
+                        泥より出でて花開く蓮のように<br class="hidden sm:inline">あなたの魂は今、どの静寂を開花させていますか？
+                    </h2>
+
+                    <p class="text-emerald-100/90 text-sm md:text-base max-w-2xl mx-auto mb-8 font-light leading-relaxed">
+                        直感、共感力、グラウンディング、執着の手放し。10の問いを通じてあなたの精神の静寂と「さとり（悟り）」の深度を測定し、現在表現されている魂のステージと進化の導きを解き明かします。
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl mx-auto mb-8 text-left text-xs text-emerald-200/90">
+                        <div class="p-3 rounded-xl bg-emerald-950/60 border border-emerald-800/40 flex items-center gap-3">
+                            <i class="fa-solid fa-eye text-emerald-300 text-lg"></i>
+                            <span><b>多角的分析:</b> 直感・グラウンディング・共感・手放しの4軸で測定</span>
+                        </div>
+                        <div class="p-3 rounded-xl bg-emerald-950/60 border border-emerald-800/40 flex items-center gap-3">
+                            <i class="fa-solid fa-spa text-pink-300 text-lg"></i>
+                            <span><b>さとりステージ:</b> 全5段階の蓮華開花ステージ判定</span>
+                        </div>
+                        <div class="p-3 rounded-xl bg-emerald-950/60 border border-emerald-800/40 flex items-center gap-3">
+                            <i class="fa-solid fa-compass text-teal-300 text-lg"></i>
+                            <span><b>開運処方箋:</b> 蓮の音妖精からの進化アドバイス</span>
+                        </div>
+                    </div>
+
+                    <button onclick="startDiagnosis()" class="group relative inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-emerald-950 bg-gradient-to-r from-emerald-300 via-teal-200 to-pink-300 rounded-full shadow-lg shadow-emerald-900/40 hover:shadow-emerald-500/30 transition duration-300 hover:scale-105 active:scale-95 cursor-pointer">
+                        <span class="flex items-center gap-2">
+                            さとり診断を開始する
+                            <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition duration-200"></i>
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Questions View -->
+                <div id="diag-quiz" class="hidden glass-card rounded-3xl p-6 md:p-10 relative border border-emerald-500/30">
+                    <div class="mb-6 flex items-center justify-between border-b border-emerald-900/50 pb-4">
+                        <span id="question-counter" class="text-xs font-semibold tracking-wider text-emerald-300 uppercase">
+                            QUESTION 01 / 10
+                        </span>
+                        <div class="w-36 h-2 bg-emerald-950 rounded-full overflow-hidden border border-emerald-800/50">
+                            <div id="quiz-progress" class="h-full bg-gradient-to-r from-emerald-400 via-teal-300 to-pink-300 w-0 transition-all duration-300"></div>
+                        </div>
+                    </div>
+
+                    <div id="question-container" class="min-h-[220px] flex flex-col justify-center">
+                        <!-- Dynamically Injected Question -->
+                    </div>
+
+                    <div class="mt-8 flex justify-between items-center pt-4 border-t border-emerald-900/50">
+                        <button id="btn-prev-q" onclick="prevQuestion()" class="text-xs text-slate-400 hover:text-emerald-300 flex items-center gap-1.5 disabled:opacity-30 disabled:hover:text-slate-400">
+                            <i class="fa-solid fa-chevron-left"></i> 前の質問
+                        </button>
+                        <span class="text-[11px] text-emerald-400/70 font-serif italic">澄み切った心でお答えください</span>
+                    </div>
+                </div>
+
+                <!-- Diagnostic Result View -->
+                <div id="diag-result" class="hidden space-y-6">
+                    <div class="glass-card rounded-3xl p-6 md:p-10 border border-emerald-400/40 text-center relative overflow-hidden shadow-2xl">
+                        <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-96 h-96 bg-emerald-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                        <span class="text-xs font-cinzel text-emerald-200 tracking-widest uppercase bg-emerald-500/20 border border-emerald-400/40 px-3 py-1 rounded-full">
+                            🪷 Lotus Stage Completed
+                        </span>
+
+                        <p class="text-emerald-200/70 text-xs mt-3">あなたの現在の魂のさとりレベル</p>
+                        <h2 id="res-stage-title" class="text-3xl md:text-5xl font-serif font-bold lotus-glow text-transparent bg-clip-text bg-gradient-to-r from-emerald-200 via-pink-200 to-amber-200 my-2">
+                            清らかな双葉 (Pure Lotus Seedling)
+                        </h2>
+                        <div class="inline-block bg-emerald-950/90 px-4 py-1.5 rounded-full text-sm text-emerald-200 border border-emerald-700/50 my-2 font-medium">
+                            覚醒スコア: <span id="res-score" class="text-pink-300 font-bold text-lg">0</span> / 100 PTS
+                        </div>
+
+                        <!-- Progress Bar for Total Score -->
+                        <div class="max-w-md mx-auto my-4">
+                            <div class="h-3 bg-emerald-950 rounded-full overflow-hidden border border-emerald-800/50 p-0.5">
+                                <div id="res-score-bar" class="h-full bg-gradient-to-r from-emerald-500 via-teal-300 to-pink-400 rounded-full w-0 transition-all duration-1000"></div>
+                            </div>
+                        </div>
+
+                        <p id="res-stage-desc" class="text-emerald-100 text-sm md:text-base max-w-2xl mx-auto mt-4 leading-relaxed font-light text-left bg-emerald-950/70 p-5 rounded-2xl border border-emerald-800/40">
+                            <!-- Description here -->
+                        </p>
+                    </div>
+
+                    <!-- Breakdown & Guidance -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Parameter Breakdown -->
+                        <div class="glass-card rounded-2xl p-6 border border-emerald-500/30">
+                            <h3 class="text-base font-serif font-bold text-emerald-200 mb-4 flex items-center gap-2">
+                                <i class="fa-solid fa-chart-pie text-pink-400"></i> さとりの4大エネルギー領域
+                            </h3>
+                            <div class="space-y-4 text-xs">
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-emerald-300"><i class="fa-solid fa-eye mr-1"></i> 直感・第3の眼 (Intuition)</span>
+                                        <span id="param-intuition-val" class="font-bold text-slate-200">0%</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-950 h-2 rounded-full overflow-hidden">
+                                        <div id="param-intuition-bar" class="bg-amber-400 h-full w-0 transition-all duration-700"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-emerald-300"><i class="fa-solid fa-heart mr-1"></i> 無条件の愛・共感 (Empathy)</span>
+                                        <span id="param-empathy-val" class="font-bold text-slate-200">0%</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-950 h-2 rounded-full overflow-hidden">
+                                        <div id="param-empathy-bar" class="bg-pink-400 h-full w-0 transition-all duration-700"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-emerald-300"><i class="fa-solid fa-leaf mr-1"></i> 大地へのグラウンディング (Grounding)</span>
+                                        <span id="param-grounding-val" class="font-bold text-slate-200">0%</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-950 h-2 rounded-full overflow-hidden">
+                                        <div id="param-grounding-bar" class="bg-emerald-400 h-full w-0 transition-all duration-700"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-emerald-300"><i class="fa-solid fa-feather mr-1"></i> 執着の手放し (Detachment)</span>
+                                        <span id="param-detachment-val" class="font-bold text-slate-200">0%</span>
+                                    </div>
+                                    <div class="w-full bg-emerald-950 h-2 rounded-full overflow-hidden">
+                                        <div id="param-detachment-bar" class="bg-teal-300 h-full w-0 transition-all duration-700"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Prescription / Advice -->
+                        <div class="glass-card rounded-2xl p-6 border border-emerald-500/30 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-base font-serif font-bold text-emerald-200 mb-3 flex items-center gap-2">
+                                    <i class="fa-solid fa-sparkles text-amber-300"></i> 蓮の音妖精からの処方箋
+                                </h3>
+                                <p id="res-advice" class="text-emerald-100/90 text-xs md:text-sm leading-relaxed mb-4">
+                                    <!-- Dynamic advice -->
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t border-emerald-900/50 flex flex-col sm:flex-row gap-3">
+                                <button onclick="switchTab('daily')" class="flex-1 py-2.5 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-semibold text-center transition duration-200 shadow-md">
+                                    推奨プラクティスを始める
+                                </button>
+                                <button onclick="startDiagnosis()" class="py-2.5 px-4 bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-800 rounded-xl text-xs font-medium text-center transition duration-200">
+                                    再診断
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- SECTION 2: DAILY EXERCISES (毎日できるエクササイズ) -->
+            <section id="sec-daily" class="tab-content hidden transition-opacity duration-300 space-y-6">
+                <!-- Banner -->
+                <div class="glass-card rounded-3xl p-6 border border-emerald-500/30 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div>
+                        <span class="text-xs font-semibold text-emerald-200 tracking-wider uppercase bg-emerald-500/20 px-3 py-1 rounded-full border border-emerald-400/30">
+                            🪷 Step-by-Step Lotus Program
+                        </span>
+                        <h2 class="text-2xl font-serif font-bold text-white mt-2">ステップ別・蓮華の育みレッスン</h2>
+                        <p class="text-emerald-100/80 text-xs md:text-sm mt-1 max-w-xl font-light">
+                            1つのステップを継続していくと、次のレベルのエクササイズが自動的に解放されます🌸 泥中の蕾から大輪の花を開かせるように、焦らず歩みましょう。
+                        </p>
+                    </div>
+                    <div class="bg-emerald-950/90 border border-emerald-800/50 rounded-2xl p-4 text-center min-w-[140px]">
+                        <span class="text-xs text-emerald-300 block">現在の連続達成</span>
+                        <span id="streak-count-display" class="text-3xl font-bold font-cinzel text-pink-300">0</span>
+                        <span class="text-xs text-slate-400 block">DAYS STREAK</span>
+                    </div>
+                </div>
+
+                <!-- Daily Oracle / Affirmation Card -->
+                <div class="glass-card rounded-2xl p-5 border border-pink-400/30 bg-gradient-to-r from-emerald-950/60 via-teal-950/40 to-pink-950/40">
+                    <div class="flex items-start gap-3">
+                        <i class="fa-solid fa-quote-left text-pink-300 text-xl mt-1"></i>
+                        <div>
+                            <span class="text-[11px] text-emerald-300 font-semibold tracking-wider uppercase block">本日のさとりアフォーメーション（魂の誓い）</span>
+                            <p id="daily-affirmation" class="text-sm md:text-base font-serif text-emerald-50 italic my-1">
+                                「私は泥の中にあっても静寂を保ち、清らかな蓮の花のように澄んだ光を咲かせます。」
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step Progress Header -->
+                <div id="step-progress-banner" class="glass-card rounded-2xl p-4 border border-teal-500/30 bg-emerald-950/40 flex flex-wrap items-center justify-between gap-3">
+                    <!-- Injected dynamically -->
+                </div>
+
+                <!-- Practice Checklist Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="exercise-cards-container">
+                    <!-- Cards will be dynamically rendered here -->
+                </div>
+            </section>
+
+            <!-- SECTION 3: MEDITATION & BREATHING TIMER (瞑想・多種呼吸法ガイド) -->
+            <section id="sec-breath" class="tab-content hidden transition-opacity duration-300 space-y-6">
+                <div class="glass-card rounded-3xl p-6 md:p-10 border border-emerald-500/30 text-center relative overflow-hidden">
+                    <div class="max-w-xl mx-auto">
+                        <span class="text-xs font-semibold text-emerald-200 tracking-wider uppercase bg-emerald-500/20 px-3 py-1 rounded-full border border-emerald-400/30">
+                            🪷 Lotus Breath & Tuning Fork
+                        </span>
+                        <h2 class="text-2xl font-serif font-bold text-white mt-2">ソウル呼吸法 ＆ 音叉ヒーリング</h2>
+                        
+                        <!-- Technique Selector Tabs -->
+                        <div class="my-5 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                            <button onclick="selectBreathTechnique('balloon478')" id="btn-tech-balloon478" class="p-2.5 rounded-xl border border-emerald-500 bg-emerald-800/80 text-white font-semibold transition flex flex-col items-center gap-1 shadow-md">
+                                <span>🎈 丹田風船</span>
+                                <span class="text-[10px] text-pink-300 font-normal">4-7-8 リラックス</span>
+                            </button>
+                            <button onclick="selectBreathTechnique('box4444')" id="btn-tech-box4444" class="p-2.5 rounded-xl border border-emerald-800/60 bg-emerald-950/60 text-slate-300 font-normal transition flex flex-col items-center gap-1 hover:border-emerald-600">
+                                <span>📦 ボックス</span>
+                                <span class="text-[10px] text-teal-300 font-normal">4-4-4-4 集中・安定</span>
+                            </button>
+                            <button onclick="selectBreathTechnique('susoku')" id="btn-tech-susoku" class="p-2.5 rounded-xl border border-emerald-800/60 bg-emerald-950/60 text-slate-300 font-normal transition flex flex-col items-center gap-1 hover:border-emerald-600">
+                                <span>🪷 禅の数息観</span>
+                                <span class="text-[10px] text-amber-300 font-normal">数を数えて無心へ</span>
+                            </button>
+                            <button onclick="selectBreathTechnique('nadi')" id="btn-tech-nadi" class="p-2.5 rounded-xl border border-emerald-800/60 bg-emerald-950/60 text-slate-300 font-normal transition flex flex-col items-center gap-1 hover:border-emerald-600">
+                                <span>☯️ 左右調和</span>
+                                <span class="text-[10px] text-indigo-300 font-normal">陰陽バランス調整</span>
+                            </button>
+                        </div>
+
+                        <!-- Lotus Fairy Guidance Widget -->
+                        <div class="my-4 p-4 rounded-2xl bg-emerald-950/80 border border-emerald-700/50 flex items-center gap-3 text-left">
+                            <div class="w-12 h-12 rounded-full bg-pink-500/20 border border-pink-400/50 flex items-center justify-center text-2xl flex-shrink-0 animate-float">
+                                🧚‍♀️
+                            </div>
+                            <div class="text-xs text-emerald-100 flex-grow">
+                                <span id="fairy-title" class="font-bold text-pink-300 block mb-0.5">丹田おなか風船呼吸の導き:</span>
+                                <span id="fairy-msg" class="leading-relaxed">「両手をそっと丹田（おへその下）に添えてね。澄んだ音叉の響きとともに、お腹の中の暖かい風船をゆっくり膨らませたり小さくしていきましょう…🌸」</span>
+                            </div>
+                        </div>
+
+                        <!-- Tuning Fork Selector & Sound Toggle -->
+                        <div class="my-5 p-3 rounded-2xl bg-emerald-950/60 border border-emerald-800/50 flex flex-wrap items-center justify-between gap-2 text-xs">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-bell text-pink-300 text-base"></i>
+                                <span class="text-emerald-200 font-semibold">ソルフェジオ音叉:</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <select id="tuning-fork-freq" class="bg-emerald-950 border border-emerald-700/60 rounded-lg px-2.5 py-1 text-emerald-200 text-xs focus:outline-none">
+                                    <option value="528">528 Hz (愛・奇跡・細胞修復)</option>
+                                    <option value="432">432 Hz (宇宙の調和・グラウンディング)</option>
+                                    <option value="852">852 Hz (直感・サードアイ開花)</option>
+                                </select>
+                                <button id="btn-toggle-sound" onclick="toggleSoundEnable()" class="px-3 py-1 rounded-lg bg-emerald-700 text-white font-medium hover:bg-emerald-600 transition">
+                                    <i class="fa-solid fa-volume-high mr-1"></i> ON
+                                </button>
+                                <button onclick="playTuningForkSound()" class="px-2.5 py-1 rounded-lg bg-pink-500/20 border border-pink-400/40 text-pink-300 hover:bg-pink-500/30 transition" title="試聴">
+                                    <i class="fa-solid fa-play text-[10px]"></i> 鳴らす
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Balloon Breathing Visual Container -->
+                        <div class="my-8 flex items-center justify-center relative h-64">
+                            <!-- Lotus Leaf Base Graphic -->
+                            <div class="absolute w-72 h-72 rounded-full border border-emerald-500/20 bg-emerald-950/30 flex items-center justify-center pointer-events-none">
+                                <div class="text-7xl opacity-15">🪷</div>
+                            </div>
+                            <div id="breath-circle-outer" class="w-60 h-60 rounded-full border border-emerald-500/30 flex items-center justify-center relative z-10">
+                                <!-- Balloon Element with smooth transitions -->
+                                <div id="breath-circle-inner" class="w-28 h-32 rounded-[50%_50%_50%_50%/60%_60%_40%_40%] bg-gradient-to-tr from-emerald-500 via-teal-400 to-pink-300 opacity-90 flex flex-col items-center justify-center shadow-2xl shadow-emerald-500/40 transition-all relative" style="transition-timing-function: ease-in-out;">
+                                    <div class="absolute -bottom-3 w-3 h-4 bg-emerald-600 clip-path-triangle opacity-80 rounded-sm"></div>
+                                    <span id="breath-status-text" class="text-emerald-950 font-bold text-sm font-serif drop-shadow-sm">準備完了</span>
+                                    <span id="breath-timer-countdown" class="text-xs text-emerald-900 font-bold mt-1"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Timer Controls & Mode -->
+                        <div class="space-y-4">
+                            <div id="breath-counter" class="text-xl font-cinzel font-bold text-pink-300">
+                                0 サイクル完了
+                            </div>
+
+                            <div class="flex justify-center items-center gap-4">
+                                <button id="btn-breath-start" onclick="toggleBreathing()" class="px-8 py-3 bg-gradient-to-r from-emerald-400 to-teal-300 text-emerald-950 font-bold text-sm rounded-full shadow-lg shadow-emerald-900/50 hover:scale-105 active:scale-95 transition duration-200 cursor-pointer">
+                                    呼吸法をスタート
+                                </button>
+                                <button onclick="resetBreathing()" class="px-4 py-3 bg-emerald-950 hover:bg-emerald-900 border border-emerald-800 text-emerald-300 text-sm rounded-full transition duration-200 cursor-pointer">
+                                    リセット
+                                </button>
+                            </div>
+
+                            <div class="pt-6 border-t border-emerald-900/50 text-left text-xs text-emerald-200/80 space-y-2">
+                                <p id="tech-guide-title" class="font-bold text-emerald-300"><i class="fa-solid fa-circle-info mr-1"></i> 呼吸法ガイド:</p>
+                                <ul id="tech-guide-list" class="list-disc list-inside space-y-2 text-slate-300">
+                                   <!-- Injected dynamically based on active technique -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: STATS & HISTORY (覚醒の記録・ログ) -->
+            <section id="sec-stats" class="tab-content hidden transition-opacity duration-300 space-y-6">
+                <div class="glass-card rounded-3xl p-6 border border-emerald-500/30">
+                    <h2 class="text-xl font-serif font-bold text-white mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-clock-rotate-left text-teal-300"></i> さとりの進化ログ
+                    </h2>
+                    <p class="text-emerald-100/70 text-xs font-light mb-6">
+                        過去に行った診断結果と、毎日のプラクティス達成状況の記録です。
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                        <div class="bg-emerald-950/70 p-4 rounded-2xl border border-emerald-800/40 text-center">
+                            <span class="text-xs text-emerald-300 block">診断実施回数</span>
+                            <span id="stat-total-tests" class="text-2xl font-bold font-cinzel text-emerald-200">0</span>
+                        </div>
+                        <div class="bg-emerald-950/70 p-4 rounded-2xl border border-emerald-800/40 text-center">
+                            <span class="text-xs text-emerald-300 block">最高さとりスコア</span>
+                            <span id="stat-max-score" class="text-2xl font-bold font-cinzel text-pink-300">-</span>
+                        </div>
+                        <div class="bg-emerald-950/70 p-4 rounded-2xl border border-emerald-800/40 text-center">
+                            <span class="text-xs text-emerald-300 block">累計習慣達成数</span>
+                            <span id="stat-total-practices" class="text-2xl font-bold font-cinzel text-teal-300">0</span>
+                        </div>
+                    </div>
+
+                    <h3 class="text-sm font-semibold text-emerald-200 mb-3">診断履歴</h3>
+                    <div id="history-list" class="space-y-3">
+                        <p class="text-xs text-emerald-400/50 italic py-4 text-center">まだ診断履歴がありません。診断を実施するとここに保存されます。</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="border-t border-emerald-900/40 py-6 text-center text-xs text-emerald-300/60">
+            <div class="max-w-5xl mx-auto px-4">
+                <p class="font-cinzel tracking-widest uppercase">LOTUS AWAKENING ASSESSMENT © 2026</p>
+                <p class="text-[10px] text-emerald-400/50 mt-1">※本診断はスピリチュアルな自己内省とリラクゼーションを目的としたエンターテインメント・マインドフルネスアプリです。</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- CUTE STAMP POPUP MODAL -->
+    <div id="stamp-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-emerald-950/80 backdrop-blur-sm hidden transition-opacity duration-300">
+        <div class="glass-card rounded-3xl p-8 max-w-sm w-full text-center border-2 border-pink-400/50 shadow-2xl relative overflow-hidden bg-emerald-950">
+            <div class="absolute -top-12 -right-12 w-32 h-32 bg-pink-500/20 rounded-full blur-2xl"></div>
+            
+            <div class="my-4">
+                <div id="stamp-badge-graphic" class="inline-block text-5xl md:text-6xl animate-stamp my-2">
+                    🪷
+                </div>
+            </div>
+
+            <h3 id="stamp-modal-title" class="text-xl font-serif font-bold text-pink-200 mt-2">
+                たいへんよくできました！
+            </h3>
+            <p id="stamp-modal-msg" class="text-xs text-emerald-100 mt-2 font-light leading-relaxed">
+                蓮の花が美しく咲き誇りました✨<br>今日のプラクティス達成おめでとうございます！
+            </p>
+
+            <button onclick="closeStampModal()" class="mt-6 px-6 py-2.5 bg-gradient-to-r from-pink-400 via-emerald-400 to-teal-300 text-emerald-950 rounded-full font-bold text-xs shadow-lg hover:scale-105 active:scale-95 transition cursor-pointer">
+                ありがとう！🌸
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // APPLICATION STATE & LOCALSTORAGE MANAGER
+        // ==========================================
+        let appData = {
+            history: [],
+            streak: 0,
+            lastActiveDate: '',
+            completedPractices: {}
+        };
+
+        function getTodayStr() {
+            const now = new Date();
+            return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+        }
+
+        function loadLocalStorage() {
+            try {
+                const saved = localStorage.getItem('aura_awakening_data');
+                if (saved) {
+                    appData = JSON.parse(saved);
+                }
+            } catch (e) {
+                console.error("Failed to load local storage:", e);
+            }
+            if (!appData.completedPractices) appData.completedPractices = {};
+            if (!appData.history) appData.history = [];
+            
+            checkStreakLogic();
+            updateStreakDisplay();
+            updateStatsView();
+        }
+
+        function saveLocalStorage() {
+            try {
+                localStorage.setItem('aura_awakening_data', JSON.stringify(appData));
+            } catch (e) {
+                console.error("Failed to save local storage:", e);
+            }
+        }
+
+        function checkStreakLogic() {
+            const today = getTodayStr();
+            if (!appData.lastActiveDate) return;
+            
+            if (appData.lastActiveDate === today) return;
+
+            const last = new Date(appData.lastActiveDate);
+            const curr = new Date(today);
+            const diffTime = Math.abs(curr - last);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            if (diffDays > 1) {
+                // Reset streak if more than 1 day missed
+                appData.streak = 0;
+            }
+        }
+
+        function updateStreakDisplay() {
+            const el = document.getElementById('streak-count-display');
+            if (el) el.innerText = appData.streak;
+        }
+
+        // ==========================================
+        // TAB NAVIGATION SYSTEM
+        // ==========================================
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            const selectedTab = document.getElementById(`sec-${tabId}`);
+            if (selectedTab) selectedTab.classList.remove('hidden');
+
+            const navBtns = ['diagnosis', 'daily', 'breath', 'stats'];
+            navBtns.forEach(id => {
+                const btn = document.getElementById(`nav-${id}`);
+                if (btn) {
+                    if (id === tabId) {
+                        btn.className = "px-3 py-1.5 rounded-full transition duration-300 font-medium flex items-center gap-1.5 bg-emerald-700 text-white shadow-md shadow-emerald-900/40";
+                    } else {
+                        btn.className = "px-3 py-1.5 rounded-full transition duration-300 font-medium flex items-center gap-1.5 text-slate-300 hover:text-white hover:bg-emerald-900/50";
+                    }
+                }
+            });
+
+            if (tabId === 'stats') updateStatsView();
+            if (tabId === 'daily') renderDailyExercises();
+            if (tabId === 'breath') updateTechniqueGuideUI();
+        }
+
+        // ==========================================
+        // WEB AUDIO SOUND SYNTHESIZER (TUNING FORK)
+        // ==========================================
+        let audioCtx = null;
+        let soundEnabled = true;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function toggleSoundEnable() {
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById('btn-toggle-sound');
+            if (btn) {
+                btn.innerHTML = soundEnabled 
+                    ? `<i class="fa-solid fa-volume-high mr-1"></i> ON`
+                    : `<i class="fa-solid fa-volume-xmark mr-1"></i> OFF`;
+                btn.className = soundEnabled 
+                    ? `px-3 py-1 rounded-lg bg-emerald-700 text-white font-medium hover:bg-emerald-600 transition`
+                    : `px-3 py-1 rounded-lg bg-slate-800 text-slate-400 font-medium hover:bg-slate-700 transition`;
+            }
+        }
+
+        function playTuningForkSound(overrideFreq) {
+            if (!soundEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                const freq = overrideFreq || parseFloat(document.getElementById('tuning-fork-freq')?.value || 528);
+                
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                
+                // Realistic bell / tuning fork envelope: gentle attack, long exponential decay
+                gain.gain.setValueAtTime(0.001, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.35, ctx.currentTime + 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 4.0);
+                
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                
+                osc.start();
+                osc.stop(ctx.currentTime + 4.0);
+            } catch (e) {
+                console.log("Audio play error:", e);
+            }
+        }
+
+        function playCuteChime() {
+            if (!soundEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+                notes.forEach((freq, i) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.08);
+                    
+                    gain.gain.setValueAtTime(0.001, ctx.currentTime + i * 0.08);
+                    gain.gain.exponentialRampToValueAtTime(0.2, ctx.currentTime + i * 0.08 + 0.02);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + i * 0.08 + 0.6);
+                    
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    
+                    osc.start(ctx.currentTime + i * 0.08);
+                    osc.stop(ctx.currentTime + i * 0.08 + 0.6);
+                });
+            } catch (e) {
+                console.log("Cute chime error:", e);
+            }
+        }
+
+        // ==========================================
+        // DIAGNOSIS QUESTIONS & EVALUATION DATA
+        // ==========================================
+        const questionsData = [
+            {
+                q: "1. 人混みや他人の感情に触れたとき、どのように感じますか？",
+                options: [
+                    { text: "他人の喜怒哀楽を自分のことのように感じて疲れやすい", cat: "empathy", pts: 10 },
+                    { text: "境界線を保ちつつ、温かい眼差しで見守ることができる", cat: "empathy", pts: 8 },
+                    { text: "相手の感情に飲み込まれず、客観的に観察できる", cat: "grounding", pts: 6 },
+                    { text: "あまり他人の感情には左右されない", cat: "grounding", pts: 4 }
+                ]
+            },
+            {
+                q: "2. 理由のない「ふとした直感」や「虫の知らせ」を感じた時、どう行動しますか？",
+                options: [
+                    { text: "論理的理由がなくても直感を100%信頼してすぐ動く", cat: "intuition", pts: 10 },
+                    { text: "頭で考え直しつつも、参考にして行動する", cat: "intuition", pts: 7 },
+                    { text: "後になって『やっぱり当たっていた』と気づくことが多い", cat: "intuition", pts: 5 },
+                    { text: "直感よりも根拠や実績を優先する", cat: "grounding", pts: 3 }
+                ]
+            },
+            {
+                q: "3. ゾロ目（1111, 777など）や偶然の出来事（シンクロニシティ）の頻度は？",
+                options: [
+                    { text: "毎日何度も見かけ、宇宙や自然からのサインだと確信している", cat: "intuition", pts: 10 },
+                    { text: "週に数回経験し、メッセージを受け取ろうと意識する", cat: "intuition", pts: 8 },
+                    { text: "時々気づくが、単なる確率の偶然だとも考える", cat: "detachment", pts: 5 },
+                    { text: "あまり意識したことがない", cat: "grounding", pts: 3 }
+                ]
+            },
+            {
+                q: "4. 過去の失敗や傷ついた出来事について、現在の心境は？",
+                options: [
+                    { text: "すべて清らかな開花のために必要な学びだったと深く感謝している", cat: "detachment", pts: 10 },
+                    { text: "許せるようになり、前向きに前進できている", cat: "detachment", pts: 8 },
+                    { text: "時々思い出して心が痛むことがある", cat: "empathy", pts: 5 },
+                    { text: "まだ強い執着や怒りが残っている", cat: "detachment", pts: 2 }
+                ]
+            },
+            {
+                q: "5. 水辺や大自然（蓮池・森林・水・空）の中にいる時、何を感じますか？",
+                options: [
+                    { text: "自然や地球、全宇宙と自分が完全に溶け合う一体感（ワンネス）", cat: "intuition", pts: 10 },
+                    { text: "深いグラウンディングと、心が洗われる強い安らぎ", cat: "grounding", pts: 8 },
+                    { text: "気持ちよいリフレッシュ感とリラックス", cat: "grounding", pts: 6 },
+                    { text: "特に何も特別な感覚はない", cat: "grounding", pts: 3 }
+                ]
+            },
+            {
+                q: "6. あなたの生きる目的や使命についての意識は？",
+                options: [
+                    { text: "自分の魂の目的（使命）を理解し、その光を表現している", cat: "intuition", pts: 10 },
+                    { text: "本当の自分を探している最中で、目覚めの途上だと感じる", cat: "empathy", pts: 8 },
+                    { text: "日常の目の前の課題に集中して生きている", cat: "grounding", pts: 5 },
+                    { text: "人生に特別な意味や目的があるかは分からない", cat: "detachment", pts: 3 }
+                ]
+            },
+            {
+                q: "7. 物質（お金・地位・所有物）と精神性（愛・感謝・学び）の優先度は？",
+                options: [
+                    { text: "精神的な豊かさと豊潤な愛が満ちていれば、物質は自ずと巡ると知っている", cat: "detachment", pts: 10 },
+                    { text: "両方のバランスを大切にして調和を模索している", cat: "grounding", pts: 8 },
+                    { text: "現実的なお金や安定が最も重要だと考える", cat: "grounding", pts: 5 },
+                    { text: "将来への不安から物を溜め込みやすい", cat: "detachment", pts: 3 }
+                ]
+            },
+            {
+                q: "8. 瞑想や静寂の時間を作ったときの感覚は？",
+                options: [
+                    { text: "思考が消え、澄み切った水面のように深い静寂に入れる", cat: "intuition", pts: 10 },
+                    { text: "心が穏やかになり、インスピレーションが湧いてくる", cat: "intuition", pts: 8 },
+                    { text: "思考が次々浮かんできて、まだ集中が難しい", cat: "grounding", pts: 5 },
+                    { text: "じっとしているのが苦手で瞑想の習慣はない", cat: "grounding", pts: 3 }
+                ]
+            },
+            {
+                q: "9. 身の回りに起こるトラブルやネガティブな出来事への対峙法は？",
+                options: [
+                    { text: "「泥があるからこそ蓮が咲く」と気づき内省する", cat: "detachment", pts: 10 },
+                    { text: "冷静に受け止め、より良い選択肢を落ち着いて選ぶ", cat: "grounding", pts: 8 },
+                    { text: "誰かのせいにしたり不安で胸がいっぱいになる", cat: "empathy", pts: 4 },
+                    { text: "力づくでトラブルを力で打開しようとする", cat: "grounding", pts: 3 }
+                ]
+            },
+            {
+                q: "10. 「見えない世界（霊性・波動・魂）」に対する実感は？",
+                options: [
+                    { text: "波動のエネルギーや愛の周波数を体感として知覚できる", cat: "intuition", pts: 10 },
+                    { text: "確実な存在を感じており、引き寄せやシンクロを尊重する", cat: "empathy", pts: 8 },
+                    { text: "関心はあるが、まだ確信は持てていない", cat: "grounding", pts: 5 },
+                    { text: "目に見える物質的な事実しか信じない", cat: "grounding", pts: 2 }
+                ]
+            }
+        ];
+
+        const stagesData = [
+            {
+                minScore: 0,
+                maxScore: 39,
+                title: "泥中の芽吹き (Seedling in the Mud)",
+                desc: "あなたの魂は今、豊かな泥中でしっかりと根を伸ばし、次の開花に向けた力を育んでいる段階です。現実世界での学びを慈しみ、日常の中に小さな感謝を見出すことで、急速に美しい蕾が成長していくでしょう。",
+                advice: "1日5分の深呼吸と、足裏で地球のエネルギーを感じるグラウンディング習慣から始めてみましょう。"
+            },
+            {
+                minScore: 40,
+                maxScore: 59,
+                title: "清らかな双葉 (Emerging Floating Leaf)",
+                desc: "あなたの内なるハートチャクラと直感が静かに水面へと顔を出し始めています。「本質に気づき始めている」という静かな予感はありませんか？自然のシンクロニシティが増えていく開花前夜のステージです。",
+                advice: "湧き出た直感をメモに残し、直感に従って小さく行動する練習を重ねましょう。"
+            },
+            {
+                minScore: 60,
+                maxScore: 74,
+                title: "薫る蓮の蕾 (Lotus Bud in Bloom)",
+                desc: "あなたの魂はさとりのプロセスを力強く歩んでいます！他者への共感力が高まり、過去のネガティブな執着を手放すコツを掴みつつあります。今にも大輪の花を咲かせようとする光の蕾です。",
+                advice: "愛と感謝のエネルギーを他者へ巡らせる『メッタ瞑想』を取り入れ、波長を高めましょう。"
+            },
+            {
+                minScore: 75,
+                maxScore: 89,
+                title: "大輪の白蓮 (Pure Blossom Master)",
+                desc: "おめでとうございます！あなたは泥（現実の試練）に染まることなく、美しい清らかさと静寂を保つマスターです。感情に振り回されず、すべてを魂の成長機会として捉える高い視点を備えています。",
+                advice: "あなたの穏やかな波動は周囲に安心感を与えます。直感とインスピレーションを形にして周囲へ分かち合いましょう。"
+            },
+            {
+                minScore: 90,
+                maxScore: 100,
+                title: "満開の金蓮華 (Golden Lotus Luminary)",
+                desc: "全宇宙のワンネスと無条件の愛の周波数を体現している悟りの境界です。泥中のすべてに感謝を見出し、存在しているだけで周囲の波動を自動的に浄化・引き上げる「静寂の燈台」です。",
+                advice: "魂の真なる目的に従って生き、人々に希望と癒やしをもたらすライトワーカーとして輝き続けてください。"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+
+        function startDiagnosis() {
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            
+            document.getElementById('diag-welcome').classList.add('hidden');
+            document.getElementById('diag-result').classList.add('hidden');
+            document.getElementById('diag-quiz').classList.remove('hidden');
+
+            renderQuestion(currentQuestionIndex);
+        }
+
+        function renderQuestion(index) {
+            const container = document.getElementById('question-container');
+            const counter = document.getElementById('question-counter');
+            const progress = document.getElementById('quiz-progress');
+            const btnPrev = document.getElementById('btn-prev-q');
+
+            counter.innerText = `QUESTION ${String(index + 1).padStart(2, '0')} / ${questionsData.length}`;
+            progress.style.width = `${((index + 1) / questionsData.length) * 100}%`;
+            btnPrev.disabled = index === 0;
+
+            const q = questionsData[index];
+
+            container.innerHTML = `
+                <h3 class="text-lg md:text-xl font-serif font-bold text-white mb-6 leading-relaxed">
+                    ${q.q}
+                </h3>
+                <div class="space-y-3">
+                    ${q.options.map((opt, optIdx) => `
+                        <button onclick="selectAnswer(${index}, ${optIdx})" class="w-full text-left p-4 rounded-2xl bg-emerald-950/40 hover:bg-emerald-800/40 border border-emerald-800/40 hover:border-amber-400/50 transition duration-200 text-xs md:text-sm text-slate-200 flex items-center justify-between group">
+                            <span>${opt.text}</span>
+                            <i class="fa-solid fa-chevron-right text-emerald-400 opacity-0 group-hover:opacity-100 transition duration-200 text-xs"></i>
+                        </button>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function selectAnswer(qIndex, optionIndex) {
+            userAnswers[qIndex] = questionsData[qIndex].options[optionIndex];
+
+            if (qIndex + 1 < questionsData.length) {
+                currentQuestionIndex++;
+                renderQuestion(currentQuestionIndex);
+            } else {
+                finishDiagnosis();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion(currentQuestionIndex);
+            }
+        }
+
+        function finishDiagnosis() {
+            document.getElementById('diag-quiz').classList.add('hidden');
+            document.getElementById('diag-result').classList.remove('hidden');
+
+            let totalScore = 0;
+            const catScores = { intuition: 0, empathy: 0, grounding: 0, detachment: 0 };
+            const catCounts = { intuition: 0, empathy: 0, grounding: 0, detachment: 0 };
+
+            userAnswers.forEach(ans => {
+                totalScore += ans.pts;
+                catScores[ans.cat] += ans.pts;
+                catCounts[ans.cat] += 10;
+            });
+
+            // Stage Determination
+            let stage = stagesData.find(s => totalScore >= s.minScore && totalScore <= s.maxScore) || stagesData[0];
+
+            document.getElementById('res-stage-title').innerText = stage.title;
+            document.getElementById('res-score').innerText = totalScore;
+            document.getElementById('res-stage-desc').innerText = stage.desc;
+            document.getElementById('res-advice').innerText = stage.advice;
+
+            setTimeout(() => {
+                document.getElementById('res-score-bar').style.width = `${totalScore}%`;
+            }, 100);
+
+            // Parameter Progress Bars
+            const pIntuition = Math.round((catScores.intuition / (catCounts.intuition || 1)) * 100);
+            const pEmpathy = Math.round((catScores.empathy / (catCounts.empathy || 1)) * 100);
+            const pGrounding = Math.round((catScores.grounding / (catCounts.grounding || 1)) * 100);
+            const pDetachment = Math.round((catScores.detachment / (catCounts.detachment || 1)) * 100);
+
+            document.getElementById('param-intuition-val').innerText = `${pIntuition}%`;
+            document.getElementById('param-empathy-val').innerText = `${pEmpathy}%`;
+            document.getElementById('param-grounding-val').innerText = `${pGrounding}%`;
+            document.getElementById('param-detachment-val').innerText = `${pDetachment}%`;
+
+            setTimeout(() => {
+                document.getElementById('param-intuition-bar').style.width = `${pIntuition}%`;
+                document.getElementById('param-empathy-bar').style.width = `${pEmpathy}%`;
+                document.getElementById('param-grounding-bar').style.width = `${pGrounding}%`;
+                document.getElementById('param-detachment-bar').style.width = `${pDetachment}%`;
+            }, 300);
+
+            // Save History
+            const today = getTodayStr();
+            appData.history.unshift({
+                date: today,
+                score: totalScore,
+                stageTitle: stage.title
+            });
+            saveLocalStorage();
+            updateStatsView();
+        }
+
+        // ==========================================
+        // DAILY EXERCISES & STEP UNLOCK PROGRAM
+        // ==========================================
+        const exerciseSteps = [
+            {
+                step: 1,
+                reqDays: 0,
+                name: "Step 1: グラウンディング & 浄化",
+                icon: "fa-leaf",
+                color: "emerald",
+                practices: [
+                    { id: "p1", title: "朝のベアフット・グラウンディング", time: "3分", desc: "素足で大地や床を感じ、地球の核と繋がるイメージで深く呼吸します。" },
+                    { id: "p2", title: "浄化のウォーターリチュアル", time: "1分", desc: "コップ1杯の白湯に『感謝と愛』の言葉を込めて静かに飲み干します。" }
+                ]
+            },
+            {
+                step: 2,
+                reqDays: 2,
+                name: "Step 2: チャクラ統合 & 共感",
+                icon: "fa-heart",
+                color: "pink",
+                practices: [
+                    { id: "p3", title: "ハートチャクラ・オープン", time: "5分", desc: "胸の中心に手を当て、ピンク色の温かい光が全身に広がるのを思い描きます。" },
+                    { id: "p4", title: "無条件の愛の言葉（アフォーメーション）", time: "2分", desc: "「私とすべての存在に平和がありますように」と心で3唱します。" }
+                ]
+            },
+            {
+                step: 3,
+                reqDays: 4,
+                name: "Step 3: サードアイ活性化 & 感謝",
+                icon: "fa-eye",
+                color: "amber",
+                practices: [
+                    { id: "p5", title: "サードアイ（第3の眼）フォーカス", time: "5分", desc: "眉間の奥にあるインディゴブルーの光に意識を集中し、直感力を高めます。" },
+                    { id: "p6", title: "3つのシンクロニシティ感謝ノート", time: "3分", desc: "今日起きた小さな偶然や有難い出来事を3つノートに書き出します。" }
+                ]
+            },
+            {
+                step: 4,
+                reqDays: 6,
+                name: "Step 4: 宇宙意識 & 執着の手放し",
+                icon: "fa-infinity",
+                color: "indigo",
+                practices: [
+                    { id: "p7", title: "感情の手放し・ソルフェジオ瞑想", time: "7分", desc: "音叉の響きとともに、不安や執着を光の粒子に変えて宇宙へと手放します。" },
+                    { id: "p8", title: "ワンネスの瞑想", time: "10分", desc: "自分が宇宙の一部であり、すべてと完璧に調和している安らぎを感じます。" }
+                ]
+            }
+        ];
+
+        function renderDailyExercises() {
+            const today = getTodayStr();
+            const completedToday = appData.completedPractices[today] || [];
+            const streak = appData.streak || 0;
+
+            // Step Progress Banner
+            const progressBanner = document.getElementById('step-progress-banner');
+            let activeStep = 1;
+            exerciseSteps.forEach(s => {
+                if (streak >= s.reqDays) activeStep = s.step;
+            });
+
+            progressBanner.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-pink-500/20 border border-pink-400/40 flex items-center justify-center text-pink-300 font-bold text-xs">
+                        Step ${activeStep}
+                    </div>
+                    <div>
+                        <span class="text-xs text-pink-300 font-semibold block">現在のクリア進行度</span>
+                        <span class="text-xs text-slate-300 font-light">連続 ${streak} 日達成中！ステップ ${activeStep} のレッスンが解放されています。</span>
+                    </div>
+                </div>
+            `;
+
+            // Exercise Cards Grid
+            const container = document.getElementById('exercise-cards-container');
+            container.innerHTML = exerciseSteps.map(stepObj => {
+                const isUnlocked = streak >= stepObj.reqDays;
+
+                return `
+                    <div class="glass-card rounded-2xl p-5 border ${isUnlocked ? 'border-emerald-500/30' : 'border-slate-800 opacity-60'} relative overflow-hidden flex flex-col justify-between">
+                        ${!isUnlocked ? `
+                            <div class="absolute inset-0 bg-slate-950/70 backdrop-blur-xs flex flex-col items-center justify-center z-10 p-4 text-center">
+                                <i class="fa-solid fa-lock text-slate-500 text-2xl mb-2"></i>
+                                <span class="text-xs font-bold text-slate-300">${stepObj.name}</span>
+                                <span class="text-[11px] text-amber-300 mt-1">※連続 ${stepObj.reqDays} 日達成でアンロック</span>
+                            </div>
+                        ` : ''}
+
+                        <div>
+                            <div class="flex items-center justify-between mb-3 border-b border-emerald-900/30 pb-2">
+                                <span class="text-xs font-bold font-serif text-emerald-200 flex items-center gap-2">
+                                    <i class="fa-solid ${stepObj.icon} text-${stepObj.color}-400"></i>
+                                    ${stepObj.name}
+                                </span>
+                                <span class="text-[10px] text-slate-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/30">
+                                    Step ${stepObj.step}
+                                </span>
+                            </div>
+
+                            <div class="space-y-3">
+                                ${stepObj.practices.map(p => {
+                                    const isDone = completedToday.includes(p.id);
+                                    return `
+                                        <div class="p-3 rounded-xl bg-emerald-950/30 border border-emerald-900/20 flex items-start gap-3">
+                                            <button onclick="togglePractice('${p.id}', '${p.title}')" class="mt-0.5 w-6 h-6 rounded-full border ${isDone ? 'bg-pink-500 border-pink-400 text-white' : 'border-emerald-600 hover:border-pink-400'} flex items-center justify-center transition duration-200 cursor-pointer flex-shrink-0">
+                                                ${isDone ? '<i class="fa-solid fa-check text-xs"></i>' : ''}
+                                            </button>
+                                            <div class="flex-grow">
+                                                <div class="flex items-center justify-between">
+                                                    <h4 class="text-xs font-bold text-slate-100 ${isDone ? 'line-through text-slate-400' : ''}">${p.title}</h4>
+                                                    <span class="text-[10px] text-amber-300/80"><i class="fa-regular fa-clock mr-1"></i>${p.time}</span>
+                                                </div>
+                                                <p class="text-[11px] text-slate-400 font-light mt-1 leading-relaxed">${p.desc}</p>
+                                            </div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function togglePractice(practiceId, practiceTitle) {
+            const today = getTodayStr();
+            if (!appData.completedPractices[today]) {
+                appData.completedPractices[today] = [];
+            }
+
+            const list = appData.completedPractices[today];
+            const index = list.indexOf(practiceId);
+
+            if (index === -1) {
+                list.push(practiceId);
+                
+                // Update streak if first practice of the day
+                if (appData.lastActiveDate !== today) {
+                    appData.streak = (appData.streak || 0) + 1;
+                    appData.lastActiveDate = today;
+                }
+                
+                showStampModal(practiceTitle);
+            } else {
+                list.splice(index, 1);
+            }
+
+            saveLocalStorage();
+            updateStreakDisplay();
+            renderDailyExercises();
+        }
+
+        // ==========================================
+        // CUTE STAMP MODAL SYSTEM
+        // ==========================================
+        function showStampModal(title) {
+            playCuteChime();
+            const modal = document.getElementById('stamp-modal');
+            const msgEl = document.getElementById('stamp-modal-msg');
+            const titleEl = document.getElementById('stamp-modal-title');
+            
+            if (titleEl) titleEl.innerText = title ? `「${title}」達成！` : "たいへんよくできました！";
+            if (msgEl) msgEl.innerHTML = `魂の輝きが一段と増しました✨<br>今日のプラクティス達成おめでとうございます！`;
+            
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeStampModal() {
+            const modal = document.getElementById('stamp-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        // ==========================================
+        // MULTI-TECHNIQUE BREATHING TIMER LOGIC
+        // ==========================================
+        const breathTechniques = {
+            balloon478: {
+                id: "balloon478",
+                name: "丹田おなか風船呼吸 (4-7-8)",
+                fairyTitle: "丹田風船呼吸のメッセージ:",
+                fairyMsg: "両手をそっと丹田（おへその下）に添えてね。お腹の中の温かな風船が膨らんだり縮んだりする感覚に寄り添いましょう…🌸",
+                steps: [
+                    { action: 'inhale', duration: 4, text: '風船を膨らます', scale: 1.65, shadow: '0 0 50px rgba(244, 63, 94, 0.6)' },
+                    { action: 'hold', duration: 7, text: '息を止める', scale: 1.65, shadow: '0 0 40px rgba(234, 179, 8, 0.5)' },
+                    { action: 'exhale', duration: 8, text: '風船をしぼませる', scale: 0.85, shadow: '0 0 20px rgba(52, 211, 153, 0.4)' }
+                ],
+                guideTitle: "丹田・おなかの風船呼吸法 (4-7-8リズム):",
+                guideItems: [
+                    "<b>姿勢:</b> 両手を丹田（おへその約5cm下）に当て、おなかの中の温かい風船を思い描きます。",
+                    "<b>吸う (4秒):</b> 鼻からゆっくり息を吸い、丹田を押し出すように風船を大きく膨らませます。",
+                    "<b>止める (7秒):</b> 満ちた風船の温もりを感じ、エネルギーを全身に行き渡らせます。",
+                    "<b>吐く (8秒):</b> 口から細く長く息を吐き出し、不要な力みや感情をすべて手放します。"
+                ]
+            },
+            box4444: {
+                id: "box4444",
+                name: "ボックスブリージング (4-4-4-4)",
+                fairyTitle: "ボックスブリージングのメッセージ:",
+                fairyMsg: "米海軍特殊部隊（NAVY SEALs）も愛用する、即座に心を平常心に戻す呼吸法だよ！四角形を描くイメージで、静かに集中を高めよう正方形の平和を描いてね✨",
+                steps: [
+                    { action: 'inhale', duration: 4, text: '吸う (4秒)', scale: 1.5, shadow: '0 0 40px rgba(56, 189, 248, 0.6)' },
+                    { action: 'hold', duration: 4, text: '止める (4秒)', scale: 1.5, shadow: '0 0 40px rgba(234, 179, 8, 0.5)' },
+                    { action: 'exhale', duration: 4, text: '吐く (4秒)', scale: 0.9, shadow: '0 0 20px rgba(52, 211, 153, 0.4)' },
+                    { action: 'holdEmpty', duration: 4, text: '空で止める (4秒)', scale: 0.9, shadow: '0 0 20px rgba(168, 85, 247, 0.4)' }
+                ],
+                guideTitle: "ボックスブリージング (4-4-4-4 均等呼吸):",
+                guideItems: [
+                    "<b>目的:</b> 緊張・パニックの即時緩和、集中力増強、自律神経の安定。",
+                    "<b>吸う (4秒):</b> 4秒かけて均等に静かに息を吸い込みます。",
+                    "<b>止める (4秒):</b> 満たされた呼吸を4秒間キープします。",
+                    "<b>吐く (4秒):</b> 4秒かけて完全に息を吐き出します。",
+                    "<b>空で止める (4秒):</b> 息を吐ききった空の状態で4秒静止します。"
+                ]
+            },
+            susoku: {
+                id: "susoku",
+                name: "禅の数息観（すそくかん）",
+                fairyTitle: "禅の数息観メッセージ:",
+                fairyMsg: "「ひとーつ…ふたーつ…」息を吐き出しながら、頭の中で数を数えてね。雑念が浮かんでも優しく受け流して、数字だけに意識を向けましょう🪷",
+                steps: [
+                    { action: 'inhale', duration: 4, text: '息を静かに吸う', scale: 1.4, shadow: '0 0 35px rgba(251, 191, 36, 0.6)' },
+                    { action: 'exhaleCount', duration: 6, text: '数えながら吐く', scale: 0.9, shadow: '0 0 25px rgba(244, 114, 182, 0.5)' },
+                    { action: 'pause', duration: 2, text: '静寂の間', scale: 0.9, shadow: '0 0 15px rgba(52, 211, 153, 0.3)' }
+                ],
+                guideTitle: "禅の数息観 (すそくかん) ガイド:",
+                guideItems: [
+                    "<b>目的:</b> 思考の空転を止め、意識を「今ここ」のゼロポイントに集約する。",
+                    "<b>やり方:</b> 息を吐くごとに「ひとーつ」「ふたーつ」と心の中で数を1から10まで数えます。",
+                    "<b>10まで行ったら:</b> 再び「ひとーつ」に戻ります。途中で数が分からなくなったら素直に1に戻ります。"
+                ]
+            },
+            nadi: {
+                id: "nadi",
+                name: "左右調和イメージブレス (ナディショーダナ風)",
+                fairyTitle: "左右調和ブレスのメッセージ:",
+                fairyMsg: "右脳（直感・感情）と左脳（論理・思考）のバランスを整える神秘の呼吸だよ。左の鼻から光を吸い、右の鼻から吐き出すようなイメージで静かに整えましょう陰陽調和☯️",
+                steps: [
+                    { action: 'inhaleLeft', duration: 4, text: '左から吸う（陰）', scale: 1.45, shadow: '0 0 40px rgba(192, 132, 252, 0.6)' },
+                    { action: 'holdCenter', duration: 4, text: '中央で統合（丹田）', scale: 1.45, shadow: '0 0 40px rgba(250, 204, 21, 0.6)' },
+                    { action: 'exhaleRight', duration: 6, text: '右から吐く（陽）', scale: 0.85, shadow: '0 0 25px rgba(45, 212, 191, 0.5)' }
+                ],
+                guideTitle: "左右調和・陰陽バランス呼吸法:",
+                guideItems: [
+                    "<b>目的:</b> 自律神経（交感神経・副交感神経）の完璧なハーモニーを整える。",
+                    "<b>左イメージ (4秒):</b> 左の気道から月（静寂・癒やし）の光の空気を吸い込みます。",
+                    "<b>統合 (4秒):</b> 丹田・ハートチャクラで光を統合して保ちます。",
+                    "<b>右イメージ (6秒):</b> 右の気道から太陽（活性・手放し）の温かい息を静かに放ちます。"
+                ]
+            }
+        };
+
+        let activeTechniqueKey = 'balloon478';
+        let breathingState = 'idle'; // 'idle' or running index of step
+        let currentStepIndex = 0;
+        let breathTimeCounter = 0;
+        let breathTimerId = null;
+        let countdownInterval = null;
+
+        function selectBreathTechnique(key) {
+            if (!breathTechniques[key]) return;
+            resetBreathing();
+            activeTechniqueKey = key;
+
+            // Highlight tab buttons
+            Object.keys(breathTechniques).forEach(k => {
+                const btn = document.getElementById(`btn-tech-${k}`);
+                if (btn) {
+                    if (k === key) {
+                        btn.className = "p-2.5 rounded-xl border border-emerald-500 bg-emerald-800/80 text-white font-semibold transition flex flex-col items-center gap-1 shadow-md";
+                    } else {
+                        btn.className = "p-2.5 rounded-xl border border-emerald-800/60 bg-emerald-950/60 text-slate-300 font-normal transition flex flex-col items-center gap-1 hover:border-emerald-600";
+                    }
+                }
+            });
+
+            updateTechniqueGuideUI();
+        }
+
+        function updateTechniqueGuideUI() {
+            const tech = breathTechniques[activeTechniqueKey];
+            if (!tech) return;
+
+            document.getElementById('fairy-title').innerText = tech.fairyTitle;
+            document.getElementById('fairy-msg').innerText = tech.fairyMsg;
+
+            document.getElementById('tech-guide-title').innerHTML = `<i class="fa-solid fa-circle-info mr-1"></i> ${tech.guideTitle}`;
+            
+            const listEl = document.getElementById('tech-guide-list');
+            if (listEl) {
+                listEl.innerHTML = tech.guideItems.map(item => `<li>${item}</li>`).join('');
+            }
+        }
+
+        function toggleBreathing() {
+            if (breathingState === 'idle') {
+                breathingState = 'running';
+                currentStepIndex = 0;
+                document.getElementById('btn-breath-start').innerText = '一時停止';
+                document.getElementById('btn-breath-start').className = "px-8 py-3 bg-rose-600 hover:bg-rose-500 text-white font-bold text-sm rounded-full shadow-lg transition duration-200 cursor-pointer";
+                executeCurrentBreathStep();
+            } else {
+                pauseBreathing();
+            }
+        }
+
+        function executeCurrentBreathStep() {
+            const tech = breathTechniques[activeTechniqueKey];
+            if (!tech || breathingState === 'idle') return;
+
+            const step = tech.steps[currentStepIndex];
+            const circleInner = document.getElementById('breath-circle-inner');
+            const statusText = document.getElementById('breath-status-text');
+
+            statusText.innerText = step.text;
+            circleInner.style.transitionDuration = `${step.duration}s`;
+            circleInner.style.transform = `scale(${step.scale})`;
+            circleInner.style.boxShadow = step.shadow;
+
+            // Audio cues
+            if (step.action.includes('inhale')) {
+                playTuningForkSound();
+            } else if (step.action.includes('exhale')) {
+                const currentFreq = parseFloat(document.getElementById('tuning-fork-freq')?.value || 528);
+                playTuningForkSound(currentFreq * 0.75);
+            }
+
+            startCountdown(step.duration);
+
+            breathTimerId = setTimeout(() => {
+                if (breathingState !== 'idle') {
+                    currentStepIndex++;
+                    if (currentStepIndex >= tech.steps.length) {
+                        currentStepIndex = 0;
+                        breathTimeCounter++;
+                        updateBreathCounterDisplay();
+                    }
+                    executeCurrentBreathStep();
+                }
+            }, step.duration * 1000);
+        }
+
+        function startCountdown(seconds) {
+            if (countdownInterval) clearInterval(countdownInterval);
+            const countdownEl = document.getElementById('breath-timer-countdown');
+            let remaining = seconds;
+            if (countdownEl) countdownEl.innerText = `${remaining}秒`;
+
+            countdownInterval = setInterval(() => {
+                remaining--;
+                if (remaining > 0) {
+                    if (countdownEl) countdownEl.innerText = `${remaining}秒`;
+                } else {
+                    if (countdownEl) countdownEl.innerText = '';
+                    clearInterval(countdownInterval);
+                }
+            }, 1000);
+        }
+
+        function pauseBreathing() {
+            if (breathTimerId) clearTimeout(breathTimerId);
+            if (countdownInterval) clearInterval(countdownInterval);
+            breathingState = 'idle';
+            document.getElementById('btn-breath-start').innerText = '再開';
+            document.getElementById('btn-breath-start').className = "px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 font-bold text-sm rounded-full shadow-lg hover:scale-105 transition duration-200 cursor-pointer";
+            document.getElementById('breath-status-text').innerText = '一時停止中';
+            document.getElementById('breath-timer-countdown').innerText = '';
+            
+            const circleInner = document.getElementById('breath-circle-inner');
+            if (circleInner) {
+                circleInner.style.transitionDuration = '0.5s';
+                circleInner.style.transform = 'scale(1)';
+            }
+        }
+
+        function resetBreathing() {
+            if (breathTimerId) clearTimeout(breathTimerId);
+            if (countdownInterval) clearInterval(countdownInterval);
+            breathingState = 'idle';
+            currentStepIndex = 0;
+            breathTimeCounter = 0;
+            updateBreathCounterDisplay();
+            document.getElementById('btn-breath-start').innerText = '呼吸法をスタート';
+            document.getElementById('btn-breath-start').className = "px-8 py-3 bg-gradient-to-r from-emerald-400 to-teal-300 text-emerald-950 font-bold text-sm rounded-full shadow-lg hover:scale-105 transition duration-200 cursor-pointer";
+            document.getElementById('breath-status-text').innerText = '準備完了';
+            document.getElementById('breath-timer-countdown').innerText = '';
+
+            const circleInner = document.getElementById('breath-circle-inner');
+            if (circleInner) {
+                circleInner.style.transitionDuration = '0.5s';
+                circleInner.style.transform = 'scale(1)';
+                circleInner.style.boxShadow = '0 25px 50px -12px rgba(6, 78, 59, 0.5)';
+            }
+        }
+
+        function updateBreathCounterDisplay() {
+            const el = document.getElementById('breath-counter');
+            if (el) el.innerText = `${breathTimeCounter} サイクル完了`;
+        }
+
+        // ==========================================
+        // STATS VIEW ENGINE
+        // ==========================================
+        function updateStatsView() {
+            const totalTestsEl = document.getElementById('stat-total-tests');
+            const maxScoreEl = document.getElementById('stat-max-score');
+            const totalPracticesEl = document.getElementById('stat-total-practices');
+
+            if (totalTestsEl) totalTestsEl.innerText = appData.history.length;
+            
+            if (appData.history.length > 0) {
+                const maxScore = Math.max(...appData.history.map(h => h.score));
+                if (maxScoreEl) maxScoreEl.innerText = `${maxScore} pts`;
+            } else {
+                if (maxScoreEl) maxScoreEl.innerText = '-';
+            }
+
+            let totalPractices = 0;
+            Object.values(appData.completedPractices).forEach(arr => {
+                totalPractices += arr.length;
+            });
+            if (totalPracticesEl) totalPracticesEl.innerText = totalPractices;
+
+            const listEl = document.getElementById('history-list');
+            if (!listEl) return;
+
+            if (appData.history.length === 0) {
+                listEl.innerHTML = `<p class="text-xs text-emerald-400/50 italic py-4 text-center">まだ診断履歴がありません。診断を実施するとここに保存されます。</p>`;
+                return;
+            }
+
+            listEl.innerHTML = appData.history.map(item => `
+                <div class="glass-card p-3 rounded-xl border border-emerald-900/30 flex items-center justify-between text-xs">
+                    <div>
+                        <span class="text-slate-400 text-[10px] block">${item.date}</span>
+                        <span class="font-serif font-semibold text-emerald-200 text-sm">${item.stageTitle}</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-amber-300 font-bold font-cinzel text-base">${item.score}</span>
+                        <span class="text-[10px] text-slate-400 block">PTS</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ==========================================
+        // LOTUS POND BACKGROUND CANVAS (RIPPLES & LIGHT DROPLETS)
+        // ==========================================
+        function initStarCanvas() {
+            const canvas = document.getElementById('lotusPondCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            const particles = [];
+            const particleCount = Math.floor((window.innerWidth * window.innerHeight) / 12000);
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 2 + 0.5,
+                    alpha: Math.random() * 0.7 + 0.2,
+                    speedY: - (Math.random() * 0.3 + 0.1),
+                    hue: Math.random() > 0.4 ? 150 : 330 // Emerald or Pink tint
+                });
+            }
+
+            // Ripples
+            const ripples = [];
+            setInterval(() => {
+                if (ripples.length < 5) {
+                    ripples.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        radius: 0,
+                        maxRadius: Math.random() * 40 + 30,
+                        alpha: 0.5
+                    });
+                }
+            }, 2500);
+
+            function animateCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Draw floating light particles
+                particles.forEach(p => {
+                    p.y += p.speedY;
+                    if (p.y < 0) p.y = canvas.height;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${p.hue}, 70%, 75%, ${p.alpha})`;
+                    ctx.fill();
+                });
+
+                // Draw ripples
+                ripples.forEach((r, idx) => {
+                    r.radius += 0.3;
+                    r.alpha -= 0.003;
+                    if (r.alpha <= 0 || r.radius >= r.maxRadius) {
+                        ripples.splice(idx, 1);
+                        return;
+                    }
+                    ctx.beginPath();
+                    ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+                    ctx.strokeStyle = `rgba(52, 211, 153, ${r.alpha})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                });
+
+                requestAnimationFrame(animateCanvas);
+            }
+            animateCanvas();
+        }
+
+        // Initialize application on page load
+        window.onload = function() {
+            loadLocalStorage();
+            initStarCanvas();
+            renderDailyExercises();
+            updateTechniqueGuideUI();
+        };
+    </script>
+</body>
+</html>
